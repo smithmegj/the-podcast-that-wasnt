@@ -86,6 +86,29 @@
       100% { opacity: 0.85; }
     }
   </style>
+  <style>
+@keyframes glitchIn {
+  0% {
+    transform: scale(0.95) rotate(-1deg);
+    opacity: 0;
+    filter: blur(2px);
+  }
+  50% {
+    transform: scale(1.02) rotate(1deg);
+    opacity: 0.7;
+    filter: blur(1px);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.listener-card {
+  animation: glitchIn 0.8s ease-out;
+}
+</style>
 </head>
 <body>
   <header>
