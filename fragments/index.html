@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Podcast That Wasn't</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Oxanium', sans-serif;
+      background-color: #0b0f19;
+      color: #d1d5db;
+      margin: 0;
+      padding: 2em;
+      text-align: center;
+      line-height: 1.6;
+    }
+    nav {
+      margin-bottom: 2em;
+    }
+    nav a {
+      color: #60a5fa;
+      text-decoration: none;
+      margin: 0 1em;
+      font-weight: 600;
+    }
+    nav a:hover {
+      color: #facc15;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 0.5em;
+      color: #93c5fd;
+      text-shadow: 0 0 5px #6366f1;
+    }
+    section {
+      margin-top: 3em;
+    }
+    .listener-card {
+      background: #1e293b;
+      border: 1px solid #374151;
+      padding: 1em;
+      border-radius: 10px;
+      margin: 1em 0;
+      animation: glitchIn 0.8s ease-out;
+    }
+    @keyframes glitchIn {
+      0% { transform: scale(0.95) rotate(-1deg); opacity: 0; filter: blur(2px); }
+      50% { transform: scale(1.02) rotate(1deg); opacity: 0.7; filter: blur(1px); }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; filter: blur(0); }
+    }
+    .hidden-glyph {
+      font-size: 2em;
+      margin-top: 1em;
+      color: #facc15;
+      display: none;
+    }
+    .unlocked .hidden-glyph {
+      display: inline-block;
+      animation: flicker 1s infinite alternate;
+    }
+    @keyframes flicker {
+      0% { opacity: 1; }
+      100% { opacity: 0.85; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#listen">Listen</a>
+  <a href="https://instagram.com" target="_blank">Instagram</a>
+  <a href="#listener-log">Listener Log</a>
+  <a href="#submit">Submit a Theory</a>
+</nav>
+
+<h1>Welcome to The Podcast That Wasn't</h1>
+<p>Fragments of forgotten broadcasts, assembled piece by piece...</p>
+
+<section id="listener-log">
+  <h2>📡 Listener Log</h2>
+  <!-- Listener entries will appear here -->
+</section>
+
+<script>
+// Fetch the Google Sheet CSV
+fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSysAiwYKZ03D_JMR3XFRhDUinngi8fJ-nlgl52iufC9wbDurAmzuYiwHFO7ebv7ww_5S2LAhGyutBp/pub?output=csv')
+  .then(response => response.text())
+  .then(data => {
+    const rows = data.split('\\n').slice(1);
+    const container = document.querySelector('#listener-log');
+    if (!container) return;
+
+    let codenameCounts = {};
+
+    rows.forEach((row) => {
+      const [timestamp, codename, theory] = row.split(',');
+      if (!codename || !theory) return;
+
+      codename = codename.trim();
+      theory = theory.trim();
+
+      codenameCounts[codename] = (codenameCounts[codename] || 0) + 1;
+
+      const div = document.createElement('div');
+      div.className = 'listener-card';
+
+      div.innerHTML = `
+        <p><strong>Codename:</strong> <code>${codename}</code></p>
+        <p><strong>Theory:</strong> ${theory}</p>
+        <div class="hidden-glyph">🧩</div>
+      `;
+
+      if (codenameCounts[codename] >= 3) {
+        div.classList.add('unlocked');
+        div.querySelector('.hidden-glyph').addEventListener('click', () => {
+          window.location.href = '/fragments/hidden.html';
+        });
+      }
+
+      container.appendChild(div);
+    });
+  });
+</script>
+
+</body>
+</html>
