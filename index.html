@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,77 +8,56 @@
   <style>
     body {
       font-family: 'Oxanium', sans-serif;
-      background-color: #10141a;
+      background-color: #0b0f19;
       color: #d1d5db;
       margin: 0;
-      padding: 0;
+      padding: 2em;
+      text-align: center;
       line-height: 1.6;
     }
-    header {
-      background: linear-gradient(90deg, #4f46e5, #9333ea);
-      padding: 1.5em 1em;
-      text-align: center;
-      color: #ffffff;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.5em;
-    }
     nav {
-      text-align: center;
-      margin-top: 1em;
+      margin-bottom: 2em;
     }
     nav a {
-      color: #ffffff;
-      margin: 0 1em;
+      color: #60a5fa;
       text-decoration: none;
+      margin: 0 1em;
       font-weight: 600;
     }
-    section {
-      padding: 2em;
-      max-width: 900px;
-      margin: auto;
-    }
-    h2 {
-      color: #93c5fd;
-    }
-    .mystery-board, .submit-theory {
-      background-color: #1f2937;
-      border: 1px solid #374151;
-      padding: 1.5em;
-      margin-bottom: 2em;
-      border-radius: 10px;
-    }
-    .listener-card {
-      background: #0f172a;
-      border-left: 4px solid #6366f1;
-      padding: 1em 1.25em;
-      margin: 1.5em 0;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
-      transition: all 0.3s ease-in-out;
-    }
-    .listener-card h3 {
-      color: #93c5fd;
-      font-size: 1.1em;
-      margin-bottom: 0.3em;
-    }
-    .listener-card code {
+    nav a:hover {
       color: #facc15;
     }
-    .listener-card p {
-      margin: 0.3em 0;
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 0.5em;
+      color: #93c5fd;
+      text-shadow: 0 0 5px #6366f1;
     }
-    .listener-card em {
-      color: #9ca3af;
+    section {
+      margin-top: 3em;
     }
-    .Recursive\ Wonder {
-      box-shadow: 0 0 12px rgba(147, 197, 253, 0.5);
+    .listener-card {
+      background: #1e293b;
+      border: 1px solid #374151;
+      padding: 1em;
+      border-radius: 10px;
+      margin: 1em 0;
+      animation: glitchIn 0.8s ease-out;
     }
-    .Digital\ Dread {
-      background: #111827;
-      border-left-color: #f43f5e;
-      animation: flicker 1.2s infinite alternate;
+    @keyframes glitchIn {
+      0% { transform: scale(0.95) rotate(-1deg); opacity: 0; filter: blur(2px); }
+      50% { transform: scale(1.02) rotate(1deg); opacity: 0.7; filter: blur(1px); }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; filter: blur(0); }
+    }
+    .hidden-glyph {
+      font-size: 2em;
+      margin-top: 1em;
+      color: #facc15;
+      display: none;
+    }
+    .unlocked .hidden-glyph {
+      display: inline-block;
+      animation: flicker 1s infinite alternate;
     }
     @keyframes flicker {
       0% { opacity: 1; }
@@ -88,39 +66,61 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>The Podcast That Wasn't</h1>
-    <p style="max-width: 700px; margin: 1em auto 0; font-weight: 300; font-size: 1.1em; color: #e5e7eb;">
-      Glitched fragments, lost voices, and digital echoes. This is an audio archive unlike anything you're meant to remember.
-    </p>
-    <nav>
-      <a href="#listen">Listen</a>
-      <a href="https://instagram.com" target="_blank">Instagram</a>
-      <a href="#mystery">Mystery Board</a>
-      <a href="#submit">Submit a Theory</a>
-    </nav>
-  </header>
 
-  <section id="listen">
-    <h2>🎧 Listen Now</h2>
-    <audio controls>
-      <source src="The_Podcast_That_Wasnt_Ep1_Teaser_Mia_404_FinalFixed.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
-    <p><em>Episode 1 Teaser – Mia + 404</em></p>
-  </section>
+<nav>
+  <a href="#listen">Listen</a>
+  <a href="https://instagram.com" target="_blank">Instagram</a>
+  <a href="#listener-log">Listener Log</a>
+  <a href="#submit">Submit a Theory</a>
+</nav>
 
-  <section id="submit" class="submit-theory">
-    <h2>🔍 Submit Your Theory</h2>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdoUgMMTW_N9gHm9vizGufP1gJTMPkaF_EiIbu_TfD5g-4qbQ/viewform?embedded=true" width="100%" height="2081" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-  </section>
+<h1>Welcome to The Podcast That Wasn't</h1>
+<p>Fragments of forgotten broadcasts, assembled piece by piece...</p>
 
-  <section id="listener-log" class="mystery-board">
-    <h2>📡 Listener Log</h2>
-  </section>
+<section id="listener-log">
+  <h2>📡 Listener Log</h2>
+  <!-- Listener entries will appear here -->
+</section>
 
 <script>
-// [Insert full JavaScript block from previous response here after confirming space]
+// Fetch the Google Sheet CSV
+fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSysAiwYKZ03D_JMR3XFRhDUinngi8fJ-nlgl52iufC9wbDurAmzuYiwHFO7ebv7ww_5S2LAhGyutBp/pub?output=csv')
+  .then(response => response.text())
+  .then(data => {
+    const rows = data.split('\\n').slice(1);
+    const container = document.querySelector('#listener-log');
+    if (!container) return;
+
+    let codenameCounts = {};
+
+    rows.forEach((row) => {
+      const [timestamp, codename, theory] = row.split(',');
+      if (!codename || !theory) return;
+
+      codename = codename.trim();
+      theory = theory.trim();
+
+      codenameCounts[codename] = (codenameCounts[codename] || 0) + 1;
+
+      const div = document.createElement('div');
+      div.className = 'listener-card';
+
+      div.innerHTML = `
+        <p><strong>Codename:</strong> <code>${codename}</code></p>
+        <p><strong>Theory:</strong> ${theory}</p>
+        <div class="hidden-glyph">🧩</div>
+      `;
+
+      if (codenameCounts[codename] >= 3) {
+        div.classList.add('unlocked');
+        div.querySelector('.hidden-glyph').addEventListener('click', () => {
+          window.location.href = '/fragments/hidden.html';
+        });
+      }
+
+      container.appendChild(div);
+    });
+  });
 </script>
 
 </body>
